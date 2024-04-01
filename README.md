@@ -2,4 +2,4 @@
 | ----------- | --------- |
 | 1. | Alfan Marcel M - 2141720266 |
 | 2. | Anisa Rahmasari - 2141720216 |
-| 3. | Anwar Alif Katresna - 234172026 |
+| 3. | Anwar Alif Katresna - 2341728026 |
