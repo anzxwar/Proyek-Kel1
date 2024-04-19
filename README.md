@@ -7,4 +7,8 @@
 | 5. | Muhammad Lukman Hakim - 2141730109 |
 | 6. | Ilham Khalis Putra Agatha - 2141720230 |
 
+Tampilan Halaman Dashboard
 ![Alt Text](uts-dashboard2.png)
+
+Tampilan Halaman Settings
+![Alt Text](uts-settings.png)
