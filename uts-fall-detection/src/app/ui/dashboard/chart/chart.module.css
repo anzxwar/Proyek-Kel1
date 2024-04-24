@@ -1,0 +1,10 @@
+.container{
+    height: 280px;
+    pad: 20px;
+    border-radius: 10px;
+}
+
+.title{
+    color: #475c8b;
+    font-size: 20px;
+}
