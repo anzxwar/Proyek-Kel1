@@ -13,13 +13,13 @@ const EditProfile = () => {
                 </nav>
 
                 <div className={styles.gridContainer}>
-                    <div className={`${styles.gridItem} ${styles.profileGridItem}`}>
+                    <div className="">
                         {/* Tambahkan foto profil di sini */}
                         <div className={styles.profileImage}>
                             <Image src="/indira.jpeg" alt="Profile Picture" width={100} height={100} />
                         </div>
                     </div>
-                    <div className={styles.gridItem}>
+                    <div className="">
                         <div className={styles.formItem}>
                             <label htmlFor="name" className={styles.label}>Your Name</label>
                             <input type="text" id="name" name="name" className={styles.input} placeholder="Indira Seruni" />
@@ -41,7 +41,7 @@ const EditProfile = () => {
                             <input type="telegram" id="telegram" name="telegram" className={styles.input} placeholder="Indira12" />
                         </div>
                     </div>
-                    <div className={styles.gridItem}>
+                    <div className="">
                         <div className={styles.formItem}>
                             <label htmlFor="user" className={styles.label}>User Name</label>
                             <input type="user" id="user" name="user" className={styles.input} placeholder="Indira Seruni" />
