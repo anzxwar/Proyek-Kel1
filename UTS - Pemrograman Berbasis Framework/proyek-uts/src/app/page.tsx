@@ -1,9 +1,9 @@
 import EditProfile from "@/components/templates/EditProfile";
-import Account from "@/pages/account";
-import Dashboard from "@/pages/dashboard";
-import Login from "@/pages/login";
-import Register from "@/pages/register";
-import Setting from "@/pages/setting";
+import Account from "@/app/account/account";
+import Dashboard from "@/app/dashboard/dashboard";
+import Login from "@/app/login/login";
+import Register from "@/app/register/register";
+import Setting from "@/app/setting/setting";
 import React from "react";
 import { ReactDOM } from "react";
 
@@ -11,7 +11,7 @@ import { ReactDOM } from "react";
 export default function Home() {
   return (
     <div className="flex justify-center min-h-screen items-center">
-      <Register/>
+      <Login/>
     </div>
   );
 }
