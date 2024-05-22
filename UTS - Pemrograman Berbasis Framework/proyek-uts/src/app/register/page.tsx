@@ -4,7 +4,7 @@ import AuthLayout from "@/components/templates/AuthLayout";
 
 const Register = () => {
     return (
-        <div>
+        <div className="flex justify-center min-h-screen items-center">
             <AuthLayout title={"Register"}>
                 <FormRegister />
             </AuthLayout>
