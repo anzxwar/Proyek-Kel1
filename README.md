@@ -4,7 +4,7 @@
 | 2. | Anisa Rahmasari - 2141720216 |
 | 3. | Anwar Alif Katresna - 2341728026 |
 | 4. | Wulan Maulidiah - 2341728038 |
-| 5. | Muhammad Lukman Hakim - 2141730109 |
+| 5. | Muhammad Lukman Hakim - 2141720109 |
 | 6. | Ilham Khalis Putra Agatha - 2141720230 |
 
 
