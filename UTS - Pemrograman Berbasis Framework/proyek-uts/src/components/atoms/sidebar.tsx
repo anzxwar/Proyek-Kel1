@@ -5,6 +5,7 @@ import { MdDashboard } from "react-icons/md";
 import { RiAccountBoxLine } from "react-icons/ri";
 import { IoSettingsOutline } from "react-icons/io5";
 import Image from 'next/image';
+import Link from "next/link";
 
 const menuItems = [
     {
@@ -15,12 +16,12 @@ const menuItems = [
     {
         title: "Accounts",
         icon: <RiAccountBoxLine />,
-        path: "/accounts"
+        path: "/account"
     },
     {
         title: "Settings",
         icon: <IoSettingsOutline />,
-        path: "/settings"
+        path: "/setting"
     },
 ];
 
@@ -34,9 +35,13 @@ const Sidebar = () => {
             </div>
             <ul className="list-none mr-4">
                 {menuItems.map(item => (
-                    <li className="flex items-center rounded-lg gap-4 py-1 px-1 hover:bg-gray-200" key={item.title}>
-                        {item.icon} 
-                        <span>{item.title}</span>
+                    <li key={item.title} className="mb-2">
+                        <Link href={item.path}>
+                            <div className="flex items-center rounded-lg gap-4 py-1 px-1 hover:bg-gray-200 text-blue-700">
+                                {item.icon} 
+                                <span>{item.title}</span>
+                            </div>
+                        </Link>
                     </li>
                 ))}
             </ul>

@@ -36,7 +36,7 @@ const InfoWaliCards = () => {
     return (
         <div className="flex flex-col gap-0">
             <div className="font-bold text-blue-700 text-xl px-10">Info Wali</div>
-            <div className="flex justify-between">
+            <div className="flex justify-between text-blue-700">
                 {infoWalis.map((infoWali, index) => (
                     <Card
                         key={index}

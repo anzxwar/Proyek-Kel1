@@ -5,8 +5,8 @@ import EditProfile from "@/components/templates/EditProfile";
 const Account = () => {
     return(
         <DashLayout>
-            <div >
-                <div className="flex flex-col gap-4">
+            <div className="flex-none h-screen">
+                <div>
                     <EditProfile/>
                 </div>
 
