@@ -3,11 +3,16 @@ import AuthLayout from "@/components/templates/AuthLayout";
 
 const Login = () => {
     return (
-        <div className="flex justify-center min-h-screen items-center">
+        <>
+        <div className="flex justify-center items-center">
+            <div>            
             <AuthLayout title={"Login"}>
                 <FormLogin />
             </AuthLayout>
+            </div>
         </div>
+       
+        </>
     );
 };
 
