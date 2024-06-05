@@ -80,13 +80,13 @@ def predict_and_save():
     n_features = 3  # gyroscope x, y, z dan acceleration x, y, z
 
     if sensor_data.shape[0] < n_timesteps:
-        print(f'Data tidak cukup: hanya {sensor_data.shape[0]} objek, menunggu sampai ada 600 objek.')
+        print(f'Data tidak cukup: hanya {sensor_data.shape[0]} objek, menunggu sampai ada 25 objek.')
         return
     elif sensor_data.shape[0] > n_timesteps:
         # Trim data jika lebih dari 600 titik
         sensor_data = sensor_data[:n_timesteps, :]
 
-    # Pertukarkan sumbu untuk menyesuaikan dengan bentuk input model (6, 600)
+    # Pertukarkan sumbu untuk menyesuaikan dengan bentuk input model (3, 25)
     sensor_data = np.swapaxes(sensor_data, 0, 1)
 
     # Ubah bentuk input sesuai dengan yang diharapkan oleh model
