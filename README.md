@@ -9,17 +9,17 @@
 
 
 Tampilan Halaman Register
-![Alt Text](uts-register.png)
+![Alt Text](assets-report/uts-register.png)
 
 Tampilan Halaman Login
-![Alt Text](uts-login.png)
+![Alt Text](assets-report/uts-login.png)
 
 Tampilan Halaman Dashboard
-![Alt Text](uts-dashboard2.png)
+![Alt Text](assets-report/uts-dashboard2.png)
 
 Tampilan Halaman Settings
-![Alt Text](uts-settings.png)
+![Alt Text](assets-report/uts-settings.png)
 
 Tampilan Halaman Edit Profile
-![Alt Text](uts-account.png)
+![Alt Text](assets-report/uts-account.png)
 
