@@ -23,3 +23,11 @@ Tampilan Halaman Settings
 Tampilan Halaman Edit Profile
 ![Alt Text](assets-report/uts-account.png)
 
+| No | Nama                          | Role             |
+|----|-------------------------------|------------------|
+| 1. | Alfan Marcel M - 2141720266   | Internet of Things |
+| 2. | Anisa Rahmasari - 2141720216  | Big Data         |
+| 3. | Anwar Alif Katresna - 2341728026 | Cloud Computing |
+| 4. | Wulan Maulidiah - 2341728038  | Back End         |
+| 5. | Muhammad Lukman Hakim - 2141720109 | Front End    |
+| 6. | Ilham Khalis Putra Agatha - 2141720230 | BOT Telegram |
