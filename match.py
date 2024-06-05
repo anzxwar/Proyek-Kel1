@@ -77,7 +77,7 @@ def predict_and_save():
 
     # Pastikan hanya melakukan prediksi jika ada tepat 600 objek
     n_timesteps = 25
-    n_features = 3  # gyroscope x, y, z dan acceleration x, y, z
+    n_features = 3
 
     if sensor_data.shape[0] < n_timesteps:
         print(f'Data tidak cukup: hanya {sensor_data.shape[0]} objek, menunggu sampai ada 25 objek.')
