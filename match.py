@@ -3,6 +3,11 @@ import json
 import numpy as np
 from tensorflow.keras.models import load_model
 import time
+import paho.mqtt.publish as mqtt
+
+broker_address = "34.128.67.15"
+port = 1883
+topic = "esp32/result"
 
 # Fungsi untuk memproses JSON menjadi array fitur
 def process_json(data_json):
@@ -103,6 +108,8 @@ def predict_and_save():
         json.dump({'prediction': status}, outfile)
 
     print(f'Hasil Prediksi: {status}')
+    publish = mqtt.Publish()
+    publish.single(topic, status, hostname=broker_address, port=port)
     print(prediction)
     print(prediction.shape)
     
@@ -110,3 +117,4 @@ def predict_and_save():
 while True:
     predict_and_save()
     time.sleep(3)
+
