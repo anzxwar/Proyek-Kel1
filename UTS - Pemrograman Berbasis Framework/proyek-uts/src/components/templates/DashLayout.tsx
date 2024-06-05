@@ -13,7 +13,6 @@ const DashLayout = ({children}) => {
                     <div>
                         {children}
                     </div>
-                   
                 </div>
             </div>
         </div>

@@ -16,9 +16,7 @@ const Dashboard = () => {
                         <CardDua status1="Normal" status2="SOS" status3="Normal"/>
                     </div>
                 </div>
-
             </div>
-            
         </DashLayout>
     );
 }
