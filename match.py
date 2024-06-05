@@ -3,7 +3,7 @@ import json
 import numpy as np
 from tensorflow.keras.models import load_model
 import time
-import paho.mqtt.publish as mqtt
+import paho.mqtt.publish as publish
 
 broker_address = "34.128.67.15"
 port = 1883
@@ -108,7 +108,6 @@ def predict_and_save():
         json.dump({'prediction': status}, outfile)
 
     print(f'Hasil Prediksi: {status}')
-    publish = mqtt.Publish()
     publish.single(topic, status, hostname=broker_address, port=port)
     print(prediction)
     print(prediction.shape)
