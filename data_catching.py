@@ -48,9 +48,9 @@ def on_message(client, userdata, msg):
         
             sensor_entry = {
                 "timestamp": timestamp,
-                "gyroscope.x": gyro_values[0],
-                "gyroscope.y": gyro_values[1],
-                "gyroscope.z": gyro_values[2]
+                "x": gyro_values[0],
+                "y": gyro_values[1],
+                "z": gyro_values[2]
             }
 
             # Append the new sensor entry
