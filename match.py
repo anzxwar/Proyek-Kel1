@@ -7,9 +7,9 @@ import time
 # Fungsi untuk memproses JSON menjadi array fitur
 def process_json(data_json):
     data = json.loads(data_json)
-    gyro_x = [float(item["gyroscope.x"]) for item in data]
-    gyro_y = [float(item["gyroscope.y"]) for item in data]
-    gyro_z = [float(item["gyroscope.z"]) for item in data]
+    gyro_x = [float(item["x"]) for item in data]
+    gyro_y = [float(item["y"]) for item in data]
+    gyro_z = [float(item["z"]) for item in data]
     
     # Gabungkan data gyroscope dan accelerometer menjadi satu array
     combined_data = np.array([gyro_x, gyro_y, gyro_z]).T
