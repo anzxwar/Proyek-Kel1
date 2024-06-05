@@ -44,7 +44,7 @@ def on_message(client, userdata, msg):
         # Validate that the data_parts have exactly 8 elements
         if len(data_parts) == 4:
             timestamp = datetime.now().isoformat()
-            gyro_values = [float(i) for i in data_parts[4:7]]
+            gyro_values = [float(i) for i in data_parts[1:4]]
         
             sensor_entry = {
                 "timestamp": timestamp,
