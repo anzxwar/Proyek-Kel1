@@ -109,4 +109,4 @@ def predict_and_save():
 # Jalankan kode setiap 1 detik
 while True:
     predict_and_save()
-    time.sleep(2)
+    time.sleep(3)
