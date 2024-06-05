@@ -69,7 +69,7 @@ class_labels = [
 
 def predict_and_save():
     # Muat data JSON dari file
-    with open('resampled_sensordata.json', 'r') as f:
+    with open('sensordata.json', 'r') as f:
         data_json = f.read()
 
     # Proses JSON untuk mendapatkan data gyroscope dan accelerometer
