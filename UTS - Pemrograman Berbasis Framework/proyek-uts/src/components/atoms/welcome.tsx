@@ -2,12 +2,10 @@ import Image from "next/image"
 
 const Welcome = () => {
     return (
-        <div className="flex items-center mt-2 mb-1">
-            <h2 className="ml-10 text-2xl text-blue-700 font-bold">Welcome Charlene! </h2>
-            <img className='pl-4 ' src="/wave_hand.png"/>
-            
+        <div className="flex flex-col lg:flex-row items-start">
+            <h2 className="lg:ml-10 text-center lg:text-left text-xl lg:text-2xl text-blue-700 font-bold mb-2 lg:mb-0">Welcome Charlene!</h2>
         </div>
-    )
-}
+    );
+};
 
-export default Welcome
+export default Welcome;
