@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const SetNotif = () => {
     return(
-        <div className="border rounded-lg p-6 bg-white mb-8">
+        <div className="border rounded-lg p-6 mb-8">
             <h2 className="text-lg font-bold text-blue-700 mb-4">Notification Telegram</h2>
                 <div className="flex flex-col">
                     <div className="flex items-center">

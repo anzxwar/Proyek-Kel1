@@ -7,37 +7,37 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 const data = [
   {
     name: "Jul",
-    jatuh: 5100,
+    fall: 5100,
     normal: 2400,
   },
   {
     name: "Aug",
-    jatuh: 4500,
+    fall: 4500,
     normal: 2400,
   },
   {
     name: "Sept",
-    jatuh: 2300,
+    fall: 2300,
     normal: 2400,
   },
   {
     name: "Oct",
-    jatuh: 3500,
+    fall: 3500,
     normal: 2400,
   },
   {
     name: "Nov",
-    jatuh: 4000,
+    fall: 4000,
     normal: 2120,
   },
   {
     name: "Des",
-    jatuh: 4000,
+    fall: 4000,
     normal: 2300,
   },
   {
     name: "Jan",
-    jatuh: 4000,
+    fall: 4000,
     normal: 2450,
   },
 ];
@@ -63,7 +63,7 @@ const ChartExample = () => {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="jatuh" stroke="#8884d8" strokeDasharray="5 5" />
+          <Line type="monotone" dataKey="fall" stroke="#8884d8" strokeDasharray="5 5" />
           <Line type="monotone" dataKey="normal" stroke="#82ca9d" strokeDasharray="3 4 5 2" />
         </LineChart>
       </ResponsiveContainer>
