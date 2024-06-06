@@ -2,7 +2,6 @@ import logging
 import paho.mqtt.client as mqtt
 from telegram import Bot as bot, Update
 from telegram.ext import Application, CommandHandler, MessageHandler, ContextTypes, filters
-import asyncio
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
@@ -39,10 +38,10 @@ def on_message(client, userdata, msg):
     message = msg.payload.decode()
     if detect_fall(message):
         for chat_id in chat_ids:
-            asyncio.run_coroutine_threadsafe(bot.send_message(chat_id=chat_id, text="Jatuh terdeteksi!"), asyncio.get_event_loop())
+            bot.send_message(chat_id=chat_id, text="Jatuh terdeteksi!")
     elif "fall" in message.lower():
         for chat_id in chat_ids:
-            asyncio.run_coroutine_threadsafe(bot.send_message(chat_id=chat_id, text=message), asyncio.get_event_loop())
+            bot.send_message(chat_id=chat_id, text=message)
 
 mqtt_client.on_connect = on_connect
 mqtt_client.on_message = on_message
@@ -58,8 +57,11 @@ async def main() -> None:
     message_handler = MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message)
     application.add_handler(message_handler)
 
-    await application.run_polling()
+    await application.initialize()
+    await application.start()
+    await application.updater.start_polling()
+    await application.updater.idle()
 
 if __name__ == "__main__":
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(main())
+    import asyncio
+    asyncio.run(main())
