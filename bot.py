@@ -57,8 +57,10 @@ async def main() -> None:
     message_handler = MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message)
     application.add_handler(message_handler)
 
-    await application.start_polling()
-    await application.idle()
+    await application.initialize()
+    await application.start()
+    await application.updater.start_polling()
+    await application.updater.idle()
 
 if __name__ == "__main__":
     import asyncio
