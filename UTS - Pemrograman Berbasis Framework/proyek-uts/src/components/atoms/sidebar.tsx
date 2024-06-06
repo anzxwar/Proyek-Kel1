@@ -6,6 +6,7 @@ import { RiAccountBoxLine } from "react-icons/ri";
 import { IoSettingsOutline } from "react-icons/io5";
 import Image from 'next/image';
 import Link from "next/link";
+import Modal from '../atoms/modal';
 
 const menuItems = [
     {
@@ -58,53 +59,71 @@ import { useContext, createContext, useState } from "react"
 const SidebarContext = createContext()
 
 export default function Sidebar({ children }) {
-    const [expanded, setExpanded] = useState(true)
-
+    const [expanded, setExpanded] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+  
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+  
+    const handleLogout = () => {
+      // Add your logout logic here, for example:
+      console.log('User logged out');
+      // After logout, you might want to close the modal
+      closeModal();
+    };
+  
     return (
-        <aside className="h-screen">
-            <nav className="h-full flex flex-col bg-white border-r shadow-sm">
-                <div className="p-4 pb-2 flex justify-between items-center">
-                    <img
-                        src="https://img.logoipsum.com/243.svg"
-                        className={`overflow-hidden transition-all ${expanded ? "w-32" : "w-0"
-                            }`}
-                        alt=""
+      <aside className="h-screen">
+        <nav style={{ backgroundColor: '#DBD3AD' }} className="h-full flex flex-col border-r shadow-sm">
+          <div className="p-4 pb-2 flex justify-between items-center">
+            <img
+              src="lansia_logo.png"
+              className={`overflow-hidden transition-all ${expanded ? "w-16" : "w-0"}`}
+              alt=""
+            />
+            <button
+              onClick={() => setExpanded((curr) => !curr)}
+              className="p-1.5 rounded-lg bg-gray-700 hover:bg-blue-100"
+            >
+              {expanded ? <ChevronFirst /> : <ChevronLast />}
+            </button>
+          </div>
+  
+          <SidebarContext.Provider value={{ expanded }}>
+            <ul className="flex-1 px-3">{children}</ul>
+          </SidebarContext.Provider>
+  
+          <div className="border-t flex p-3 relative">
+            <img
+              src="mbak.png"
+              alt=""
+              className="w-10 h-10 rounded-md"
+            />
+            <div className={`flex justify-between items-center overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}`}>
+              <div className="leading-4">
+                <h4 className="font-semibold text-gray-600">Charlene</h4>
+                <span className="text-xs text-gray-600">Charlene112@gmail.com</span>
+              </div>
+              <div className="relative">
+                <button onClick={openModal} className="ml-3">
+                  <MoreVertical size={20} />
+                </button>
+                <div className="relative">
+                  {isModalOpen && (
+                    <Modal
+                      isOpen={isModalOpen}
+                      onClose={closeModal}
+                      onLogout={handleLogout}
                     />
-                    <button
-                        onClick={() => setExpanded((curr) => !curr)}
-                        className="p-1.5 rounded-lg bg-gray-700 hover:bg-blue-100"
-                    >
-                        {expanded ? <ChevronFirst /> : <ChevronLast />}
-                    </button>
+                  )}
                 </div>
-
-                <SidebarContext.Provider value={{ expanded }}>
-                    <ul className="flex-1 px-3">{children}</ul>
-                </SidebarContext.Provider>
-
-                <div className="border-t flex p-3">
-                    <img
-                        src="mbak.png"
-                        alt=""
-                        className="w-10 h-10 rounded-md"
-                    />
-                    <div
-                        className={`
-              flex justify-between items-center
-              overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}
-          `}
-                    >
-                        <div className="leading-4">
-                            <h4 className="font-semibold text-gray-600">Charlene</h4>
-                            <span className="text-xs text-gray-600">Charlene112@gmail.com</span>
-                        </div>
-                        <MoreVertical size={20} />
-                    </div>
-                </div>
-            </nav>
-        </aside>
-    )
-}
+              </div>
+            </div>
+          </div>
+        </nav>
+      </aside>
+    );
+  }
 
 export function SidebarItem({ icon, text, active, alert }) {
     const { expanded } = useContext(SidebarContext)
