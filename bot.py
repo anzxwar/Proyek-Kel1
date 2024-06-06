@@ -1,6 +1,6 @@
 import logging
 import paho.mqtt.client as mqtt
-from telegram import Bot, Update
+from telegram import Bot as bot, Update
 from telegram.ext import Application, CommandHandler, MessageHandler, ContextTypes, filters
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
