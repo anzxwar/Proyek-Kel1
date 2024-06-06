@@ -1,38 +1,33 @@
-from telegram import Bot
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
 import paho.mqtt.client as mqtt
+from telegram import Bot, Update
+from telegram.ext import Application, CommandHandler, MessageHandler, ContextTypes, filters
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 
 logger = logging.getLogger(__name__)
 
-bot = Bot('6953268438:AAGvy3-4WMaJeRtl0PpYn44HzXwNjNXXWqc')
-updater = Updater(bot=bot)
-
-dispatcher = updater.dispatcher
+bot_token = '6953268438:AAGvy3-4WMaJeRtl0PpYn44HzXwNjNXXWqc'
 
 chat_ids = set([1265101503, 1505104468])
 
 mqtt_client = mqtt.Client()
 mqtt_client.connect("34.128.67.15", 1883)
 
-def start(update, context):
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     chat_ids.add(update.effective_chat.id)
-    context.bot.send_message(chat_id=update.effective_chat.id, text="Bot telah dimulai. Kirimkan data dari alat IoT Anda.")
+    await context.bot.send_message(chat_id=update.effective_chat.id, text="Bot telah dimulai. Kirimkan data dari alat IoT Anda.")
 
 def detect_fall(data):
-    if data == "FALL_DETECTED":
-        return True
-    return False
+    return data == "FALL_DETECTED"
 
-def handle_message(update, context):
+async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     chat_ids.add(update.effective_chat.id)
     message = update.message.text
     if detect_fall(message):
         for chat_id in chat_ids:
-            context.bot.send_message(chat_id=chat_id, text="Jatuh terdeteksi!")
+            await context.bot.send_message(chat_id=chat_id, text="Jatuh terdeteksi!")
 
 def on_connect(client, userdata, flags, rc):
     print("Connected with result code "+str(rc))
@@ -44,7 +39,7 @@ def on_message(client, userdata, msg):
     if detect_fall(message):
         for chat_id in chat_ids:
             bot.send_message(chat_id=chat_id, text="Jatuh terdeteksi!")
-    elif "fall" in message:
+    elif "fall" in message.lower():
         for chat_id in chat_ids:
             bot.send_message(chat_id=chat_id, text=message)
 
@@ -53,12 +48,18 @@ mqtt_client.on_message = on_message
 
 mqtt_client.loop_start()
 
-start_handler = CommandHandler('start', start)
-dispatcher.add_handler(start_handler)
+async def main() -> None:
+    application = Application.builder().token(bot_token).build()
 
-message_handler = MessageHandler(Filters.text & (~Filters.command), handle_message)
-dispatcher.add_handler(message_handler)
+    start_handler = CommandHandler('start', start)
+    application.add_handler(start_handler)
 
-updater.start_polling()
+    message_handler = MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message)
+    application.add_handler(message_handler)
 
-updater.idle()
+    await application.start_polling()
+    await application.idle()
+
+if __name__ == "__main__":
+    import asyncio
+    asyncio.run(main())
