@@ -47,9 +47,6 @@ def on_message(client, userdata, msg):
     elif "fall" in message:
         for chat_id in chat_ids:
             bot.send_message(chat_id=chat_id, text=message)
-    else:
-        for chat_id in chat_ids:
-            bot.send_message(chat_id=chat_id, text="tidak jatuh")
 
 mqtt_client.on_connect = on_connect
 mqtt_client.on_message = on_message
