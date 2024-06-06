@@ -59,7 +59,8 @@ async def main() -> None:
 
     await application.initialize()
     await application.start()
-    await application.run_polling()
+    await application.updater.start_polling()
+    await application.updater.idle()
 
 if __name__ == "__main__":
     import asyncio
