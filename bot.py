@@ -6,7 +6,7 @@ import paho.mqtt.client as mqtt
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 
-logger = logging.getLogger(_name_)
+logger = logging.getLogger(__name__)
 
 bot = Bot('6953268438:AAGvy3-4WMaJeRtl0PpYn44HzXwNjNXXWqc')
 updater = Updater(bot=bot)
