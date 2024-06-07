@@ -44,8 +44,8 @@ const data = [
 
 const ChartExample = () => {
   return (
-    <div className="h-80 mt-1 px-10 rounded-10 pb-2">
-      <h2 className="text-blue-700 text-lg font-bold">History Fall Detection</h2>
+    <div className="h-80 px-10 rounded-10 pb-2" style={{ borderTop: '2px solid black', borderBottom: '2px solid black', paddingTop: '30px', paddingBottom: '30px' }}>
+      <h2 style={{color : "#03045e"}} className="text-lg font-bold">History Fall Detection</h2>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           width={500}
@@ -70,5 +70,6 @@ const ChartExample = () => {
     </div>
   );
 };
+
 
 export default ChartExample;

@@ -3,9 +3,9 @@ import DashLayout from "@/components/templates/DashLayout";
 
 const Setting = () => {
     return (
-        <div className="bg-white">
+        <div className="bg-gradient-to-r from-gray-100 to-yellow-100">
             <DashLayout>
-                <div className="flex flex-col rounded-2xl gap-4 bg-gradient-to-r from-yellow-200 to-gray-100">
+                <div className="flex flex-col rounded-2xl gap-4 bg-white">
                     <div className="flex justify-between">
                         <SetNotif />
                     </div>
