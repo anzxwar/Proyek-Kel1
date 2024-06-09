@@ -8,23 +8,23 @@ import Image from 'next/image';
 import Link from "next/link";
 import Modal from '../atoms/modal';
 
-const menuItems = [
-    {
-        title: "Dashboard",
-        icon: <MdDashboard />,
-        path: "/dashboard"
-    },
-    {
-        title: "Accounts",
-        icon: <RiAccountBoxLine />,
-        path: "/account"
-    },
-    {
-        title: "Settings",
-        icon: <IoSettingsOutline />,
-        path: "/setting"
-    },
-];
+// const menuItems = [
+//     {
+//         title: "Dashboard",
+//         icon: <MdDashboard />,
+//         path: "/dashboard"
+//     },
+//     {
+//         title: "Accounts",
+//         icon: <RiAccountBoxLine />,
+//         path: "/account"
+//     },
+//     {
+//         title: "Settings",
+//         icon: <IoSettingsOutline />,
+//         path: "/setting"
+//     },
+// ];
 
 // const Sidebar = () => {
 
@@ -77,7 +77,7 @@ export default function Sidebar({ children }) {
         <nav style={{ backgroundColor: '#DBD3AD' }} className="h-full flex flex-col border-r shadow-sm">
           <div className="p-4 pb-2 flex justify-between items-center">
             <img
-              src="lansia_logo.png"
+              src="/lansia_logo.png"
               className={`overflow-hidden transition-all ${expanded ? "w-16" : "w-0"}`}
               alt=""
             />
@@ -95,7 +95,7 @@ export default function Sidebar({ children }) {
   
           <div className="border-t flex p-3 relative">
             <img
-              src="mbak.png"
+              src="/mbak.png"
               alt=""
               className="w-10 h-10 rounded-md"
             />

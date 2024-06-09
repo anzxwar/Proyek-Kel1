@@ -1,10 +1,10 @@
 import { Switch } from "antd";
 import Link from 'next/link';
 
-const EditProfile = () => {
+const EditWali = () => {
     return (
         <div>
-            <div className="h-full p-8 flex flex-col items-left gap-4">
+            <div className="h-full p-8 flex flex-col items-left gap-4 mt-1 ">
                 <nav className="flex text-base text-gray-500 border-b border-gray-300 py-2 px-2">
                     
                     <Link href="/account"> 
@@ -19,7 +19,7 @@ const EditProfile = () => {
                 <div className="grid grid-cols-3 gap-auto text-blue-600">
                     <div className="col-span-1">
                         <div className="w-100 h-100 rounded-full overflow-hidden">
-                            <img src="/mbak.png" alt="Profile Picture" className="rounded-full w-24 h-24 object-cover" />
+                            <img src="/profile1.png" alt="Profile Picture" className="rounded-full w-24 h-24 object-cover" />
                         </div>
                     </div>
                     <div className="col-span-1 space-y-3">
@@ -80,4 +80,4 @@ const EditProfile = () => {
     );
 }
 
-export default EditProfile;
+export default EditWali;

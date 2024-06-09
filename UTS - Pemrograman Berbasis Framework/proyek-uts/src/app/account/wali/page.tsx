@@ -1,14 +1,14 @@
 import DashLayout from "@/components/templates/DashLayout";
-import EditProfile from "@/components/templates/EditProfile";
+import EditWali from "@/components/templates/EditWali";
 
-const waliAccount = () => {
+const Account = () => {
     return (
         <div className="bg-gradient-to-r from-gray-100 to-amber-100">
             <DashLayout>
                 <div >
-                    <div className="rounded-2xl flex flex-col bg-white">
+                    <div className="rounded-2xl flex flex-col gap-4 bg-white">
                         <div className="flex justify-between">
-                            <EditProfile />
+                            <EditWali />
                         </div>
                     </div>
                 </div>
@@ -17,4 +17,4 @@ const waliAccount = () => {
     );
 }
 
-export default waliAccount
+export default Account
