@@ -11,7 +11,7 @@ const DashLayout = ({ children }) => {
   const pathname = usePathname();
 
   return (
-    <div className="flex">
+    <div className="h-full flex">
       <div className="flex-none">
         <Sidebar>
           <Link href="/dashboard" passHref>

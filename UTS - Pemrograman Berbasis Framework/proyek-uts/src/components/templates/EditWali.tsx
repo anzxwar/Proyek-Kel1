@@ -1,14 +1,10 @@
 import { Switch } from "antd";
 import Link from 'next/link';
 
-const EditProfile = () => {
+const EditWali = () => {
     return (
         <div>
-<<<<<<< HEAD
-            <div className="h-screen p-8 flex flex-col items-left gap-6 mt-1 ">
-=======
-            <div className="h-full p-8 flex flex-col items-left gap-4">
->>>>>>> 33ddf29c4f506c47d56d766fee8cf29fb29de82a
+            <div className="h-full p-8 flex flex-col items-left gap-4 mt-1 ">
                 <nav className="flex text-base text-gray-500 border-b border-gray-300 py-2 px-2">
                     
                     <Link href="/account"> 
@@ -20,13 +16,13 @@ const EditProfile = () => {
                     <h2 className="navItem hover:text-blue-500 mr-10">Edit Kontak Dokter</h2>
                 </nav>
 
-                <div className="grid grid-cols-12 gap-auto text-blue-600">
+                <div className="grid grid-cols-3 gap-auto text-blue-600">
                     <div className="col-span-1">
                         <div className="w-100 h-100 rounded-full overflow-hidden">
-                            <img src="/mbak.png" alt="Profile Picture" className="rounded-full w-24 h-24 object-cover" />
+                            <img src="/profile1.png" alt="Profile Picture" className="rounded-full w-24 h-24 object-cover" />
                         </div>
                     </div>
-                    <div className="col-span-5 space-y-4 ml-6">
+                    <div className="col-span-1 space-y-3">
                         <div className="mb-1">
                             <label htmlFor="name" className="font-bold mb-1 block">Your Name</label>
                             <input type="text" id="name" name="name" className="p-1 border text-black border-blue-300 rounded-md w-4/5"  />
@@ -49,7 +45,7 @@ const EditProfile = () => {
                         </div>
                         
                     </div>
-                    <div className="col-span-5 space-y-3">
+                    <div className="col-span-1 space-y-3">
                         <div className="mb-1">
                             <label htmlFor="user" className="font-bold mb-1 block">User Name</label>
                             <input type="user" id="user" name="user" className="p-1 border text-black border-blue-300 rounded-md w-4/5"  />
@@ -84,4 +80,4 @@ const EditProfile = () => {
     );
 }
 
-export default EditProfile;
+export default EditWali;

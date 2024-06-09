@@ -23,7 +23,7 @@ const bukanDashboard = () => {
 
 const Dashboard = () => {
     return (
-        <div className="bg-gradient-to-r from-gray-100 to-yellow-100">
+        <div className="bg-gradient-to-r from-gray-100 to-amber-100">
             <DashLayout>
                 <div className="h-full">
                     <div className="h-full flex flex-col gap-6 bg-white p-4 sm:p-6 rounded-2xl">
