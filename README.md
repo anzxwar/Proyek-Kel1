@@ -21,7 +21,7 @@ Tampilan Halaman Settings
 ![alt text](assets-report/sett.png)
 
 Tampilan Halaman Edit Profile
-![alt text]assets-report/(acc.png)
+![alt text](assets-report/acc.png)
 
 | No | Nama                          | Role             |
 |----|-------------------------------|------------------|
