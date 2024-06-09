@@ -7,7 +7,7 @@ const Account = () => {
             <DashLayout>
                 <div >
                     <div className="rounded-2xl flex flex-col gap-4 bg-white">
-                        <div className="flex justify-between">
+                        <div className="">
                             <EditWali />
                         </div>
                     </div>

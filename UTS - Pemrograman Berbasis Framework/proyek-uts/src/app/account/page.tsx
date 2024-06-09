@@ -7,7 +7,7 @@ const waliAccount = () => {
             <DashLayout>
                 <div >
                     <div className="rounded-2xl flex flex-col bg-white">
-                        <div className="flex justify-between">
+                        <div className="">
                             <EditProfile />
                         </div>
                     </div>

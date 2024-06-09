@@ -4,7 +4,7 @@ import Link from 'next/link';
 const EditProfile = () => {
     return (
         <div>
-            <div className="h-full p-8 flex flex-col items-left gap-4">
+            <div className="h-full p-8 flex flex-col items-left gap-8">
                 <nav className="flex text-base text-gray-500 border-b border-gray-300 py-2 px-2">
                     
                     <Link href="/account"> 
@@ -16,9 +16,9 @@ const EditProfile = () => {
                     <h2 className="navItem hover:text-blue-500 mr-10">Edit Kontak Dokter</h2>
                 </nav>
 
-                <div className="grid grid-cols-3 gap-auto text-blue-600">
-                    <div className="col-span-1">
-                        <div className="w-100 h-100 rounded-full overflow-hidden">
+                <div style={{color : "#03045e"}} className="grid grid-cols-3 gap-auto">
+                    <div className="flex justify-center col-span-1">
+                        <div className="rounded-full">
                             <img src="/mbak.png" alt="Profile Picture" className="rounded-full w-24 h-24 object-cover" />
                         </div>
                     </div>
@@ -66,8 +66,9 @@ const EditProfile = () => {
                             <label htmlFor="Country" className="font-bold mb-1 block">Country Username</label>
                             <input type="Country" id="Country" name="Country" className="p-1 border text-black border-blue-300 rounded-md w-4/5"  />
                         </div>
-                        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Submit</button>
-                        
+                        <div className="flex justify-start">
+                        <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-4/5">Submit</button>
+                        </div>
                     </div>
                     
                     

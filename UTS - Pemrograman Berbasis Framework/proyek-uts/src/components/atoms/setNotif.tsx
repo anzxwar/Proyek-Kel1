@@ -4,14 +4,14 @@ import Link from "next/link";
 const SetNotif = () => {
     return(
         <div className="rounded-lg p-6 mb-8">
-            <h2 className="text-lg font-bold text-blue-700 mb-4">Notification Telegram</h2>
+            <h2 style={{color : "#03045e"}} className="text-lg font-bold mb-4">Notification Telegram</h2>
                 <div className="flex flex-col">
                     <div className="flex items-center">
                         <Switch defaultChecked={true} />
                         <span className="ml-3 text-black">Mengirimkan Notifikasi Jatuh ke Wali</span>
                     </div>
                  <div className="mt-4">
-                    <h3 className="text-md font-bold text-blue-700 mb-2">Tutorial: How to Subscribe to Our Telegram Bot</h3>
+                    <h3 style={{color : "#03045e"}} className="text-md font-bold mb-2">Tutorial: How to Subscribe to Our Telegram Bot</h3>
                         <ol className="list-decimal text-black list-inside">
                             <li>Open the Telegram app on your phone.</li>
                             <li>Tap on the magnifying glass icon to open the search bar.</li>
