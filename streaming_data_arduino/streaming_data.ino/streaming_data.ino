@@ -76,23 +76,6 @@ void setup()
     }
   }
   Serial.println("MPU6050 Found!");
-
-  mpu.setAccelerometerRange(MPU6050_RANGE_8_G);
-  Serial.print("Accelerometer range set to: ");
-  switch (mpu.getAccelerometerRange()) {
-  case MPU6050_RANGE_2_G:
-    Serial.println("+-2G");
-    break;
-  case MPU6050_RANGE_4_G:
-    Serial.println("+-4G");
-    break;
-  case MPU6050_RANGE_8_G:
-    Serial.println("+-8G");
-    break;
-  case MPU6050_RANGE_16_G:
-    Serial.println("+-16G");
-    break;
-  }
   mpu.setGyroRange(MPU6050_RANGE_500_DEG);
   Serial.print("Gyro range set to: ");
   switch (mpu.getGyroRange()) {
@@ -171,10 +154,8 @@ void loop() {
     // Serial.print(g.gyro.z);
     // Serial.println(" rad/s");
 
-    Serial.println("");
-
-    //String sensorData = "[" + "x:" + String(g.gyro.x) + "," +  "y:" + String(g.gyro.y) + "," + "z:" + String(g.gyro.z) + "]";
-    String sensorData =  "{\"x\":" + String(g.gyro.x) + ",\"y\":" + String(g.gyro.y) + ",\"z\":" + String(g.gyro.z);
+    String sensorData =  String(g.gyro.x) + "," + String(g.gyro.y) + "," + String(g.gyro.z);
+    Serial.println("sending packet");
     client.publish("esp32/sensors", sensorData.c_str());
   }
 }
