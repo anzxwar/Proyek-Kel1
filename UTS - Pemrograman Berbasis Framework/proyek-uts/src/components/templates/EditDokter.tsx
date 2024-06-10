@@ -1,7 +1,7 @@
 import { Switch } from "antd";
 import Link from 'next/link';
 
-const EditWali = () => {
+const EditDokter = () => {
     return (
         <div>
             <div className="h-full p-8 flex flex-col items-left gap-8">
@@ -83,4 +83,4 @@ const EditWali = () => {
     );
 }
 
-export default EditWali;
+export default EditDokter;

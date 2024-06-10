@@ -13,7 +13,9 @@ const EditProfile = () => {
                     <Link href="/account/wali">
                     <h2 className="navItem hover:text-blue-500 mr-10">Edit Wali</h2>
                     </Link>
+                    <Link href="/account/dokter">
                     <h2 className="navItem hover:text-blue-500 mr-10">Edit Kontak Dokter</h2>
+                    </Link>
                 </nav>
 
                 <div style={{color : "#03045e"}} className="grid grid-cols-3 gap-auto">
