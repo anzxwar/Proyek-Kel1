@@ -5,7 +5,7 @@ from tensorflow.keras.models import load_model
 import time
 import paho.mqtt.publish as publish
 
-broker_address = "34.128.67.15"
+broker_address = "34.128.107.144"
 port = 1883
 topic = "esp32/result"
 

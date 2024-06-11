@@ -16,7 +16,7 @@ dispatcher = updater.dispatcher
 chat_ids = set([1265101503, 1505104468])
 
 mqtt_client = mqtt.Client()
-mqtt_client.connect("34.128.67.15", 1883)
+mqtt_client.connect("34.128.107.144", 1883)
 
 def start(update, context):
     chat_ids.add(update.effective_chat.id)

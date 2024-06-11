@@ -4,7 +4,7 @@ import paho.mqtt.client as mqtt
 from datetime import datetime
 
 # Configuration for MQTT
-broker_address = "34.128.67.15"
+broker_address = "34.128.107.144"
 port = 1883
 topic = "esp32/sensors"
 
