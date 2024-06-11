@@ -168,22 +168,16 @@ void loop() {
     sendDataPrevMillis = millis();
  
     if (Firebase.RTDB.setFloat(&fbdo, "Sensor/gyroX", g.gyro.x)){
-      Serial.println(); Serial.print(g.gyro.x);
-      Serial.println("(" + fbdo.dataType() +")");
     } else {
       Serial.println("FAILED:" + fbdo.errorReason());
     }
 
     if (Firebase.RTDB.setFloat(&fbdo, "Sensor/gyroY", g.gyro.y)){
-      Serial.println(); Serial.print(g.gyro.y);
-      Serial.println("(" + fbdo.dataType() +")");
     } else {
       Serial.println("FAILED:" + fbdo.errorReason());
     }
 
-    if (Firebase.RTDB.setFloat(&fbdo, "Sensor/gyroZ", g.gyro.z)){
-      Serial.println(); Serial.print(g.gyro.z);
-      Serial.println("(" + fbdo.dataType() +")");
+    if (Firebase.RTDB.setFloat(&fbdo, "Sensor/gyroZ", g.gyro.z)){ 
     } else {
       Serial.println("FAILED:" + fbdo.errorReason());
     }
