@@ -160,41 +160,36 @@ void loop() {
   //   lastMeasure = now;
   // /* Get new sensor events with the readings */
   unsigned long currentMillis = millis();
-  if (currentMillis - previousMillis >= interval) {  // Memeriksa apakah interval waktu telah berlalu
+  if (Firebase.ready() && signupOK && (currentMillis - previousMillis >= interval)) {  // Memeriksa apakah interval waktu telah berlalu
     previousMillis = currentMillis;
 
     sensors_event_t a, g, temp;
     mpu.getEvent(&a, &g, &temp);
-
-   if(Firebase.ready() && signupOK && (millis() - sendDataPrevMillis > 100 || sendDataPrevMillis == 0)){
-      sendDataPrevMillis = millis();
-
-      sensors_event_t a, g, temp;
-      mpu.getEvent(&a, &g, &temp);
-      if (Firebase.RTDB.setFloat(&fbdo, "Sensor/gyroX", g.gyro.x)){
-        Serial.println(); Serial.print(g.gyro.x);
-        Serial.println("(" + fbdo.dataType() +")");
-      } else {
-        Serial.println("FAILED:" + fbdo.errorReason());
-      }
-
-      if (Firebase.RTDB.setFloat(&fbdo, "Sensor/gyroY", g.gyro.y)){
-        Serial.println(); Serial.print(g.gyro.y);
-        Serial.println("(" + fbdo.dataType() +")");
-      } else {
-        Serial.println("FAILED:" + fbdo.errorReason());
-      }
-
-      if (Firebase.RTDB.setFloat(&fbdo, "Sensor/gyroZ", g.gyro.z)){
-        Serial.println(); Serial.print(g.gyro.z);
-        Serial.println("(" + fbdo.dataType() +")");
-      } else {
-        Serial.println("FAILED:" + fbdo.errorReason());
-      }
-
-      String sensorData =  String(g.gyro.x) + "," + String(g.gyro.y) + "," + String(g.gyro.z);
-      Serial.println("sending packet");
-      client.publish("esp32/sensors", sensorData.c_str());
+    sendDataPrevMillis = millis();
+ 
+    if (Firebase.RTDB.setFloat(&fbdo, "Sensor/gyroX", g.gyro.x)){
+      Serial.println(); Serial.print(g.gyro.x);
+      Serial.println("(" + fbdo.dataType() +")");
+    } else {
+      Serial.println("FAILED:" + fbdo.errorReason());
     }
+
+    if (Firebase.RTDB.setFloat(&fbdo, "Sensor/gyroY", g.gyro.y)){
+      Serial.println(); Serial.print(g.gyro.y);
+      Serial.println("(" + fbdo.dataType() +")");
+    } else {
+      Serial.println("FAILED:" + fbdo.errorReason());
+    }
+
+    if (Firebase.RTDB.setFloat(&fbdo, "Sensor/gyroZ", g.gyro.z)){
+      Serial.println(); Serial.print(g.gyro.z);
+      Serial.println("(" + fbdo.dataType() +")");
+    } else {
+      Serial.println("FAILED:" + fbdo.errorReason());
+    }
+
+    String sensorData =  String(g.gyro.x) + "," + String(g.gyro.y) + "," + String(g.gyro.z);
+    Serial.println("sending packet");
+    client.publish("esp32/sensors", sensorData.c_str());
   }
 }
