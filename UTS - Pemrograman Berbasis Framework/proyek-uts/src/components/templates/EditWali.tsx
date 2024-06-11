@@ -3,28 +3,16 @@ import Link from 'next/link';
 
 const EditWali = () => {
     return (
-        <div>
-            <div className="h-full p-8 flex flex-col items-left gap-8">
-                <nav className="flex text-base text-gray-500 border-b border-gray-300 py-2 px-2">
-                    
-                    <Link href="/account"> 
-                    <h2 className="navItem hover:text-blue-500 mr-10">Edit Profile</h2>
-                    </Link>
-                    <Link href="/account/wali">
-                    <h2 className="navItem hover:text-blue-500 mr-10">Edit Wali</h2>
-                    </Link>
-                    <Link href="/account/dokter">
-                    <h2 className="navItem hover:text-blue-500 mr-10">Edit Kontak Dokter</h2>
-                    </Link>
-                </nav>
+        <div className="w-3/4 flex justify-end">
+            <div className="w-full p-8">
 
-                <div style={{color : "#03045e"}} className="grid grid-cols-3 gap-auto">
-                    <div className="flex justify-center col-span-1">
+                <div style={{color : "#03045e"}} className="grid grid-cols-2 gap-auto">
+                    {/* <div className="flex justify-center col-span-1">
                         <div className="rounded-full">
                             <img src="/profile1.png" alt="Profile Picture" className="rounded-full w-24 h-24 object-cover" />
                         </div>
-                    </div>
-                    <div className="col-span-1 space-y-3">
+                    </div> */}
+                    <div className="col-start-1 col-span-1 space-y-3">
                         <div className="mb-1">
                             <label htmlFor="name" className="font-bold mb-1 block">Your Name</label>
                             <input type="text" id="name" name="name" className="p-1 border text-black border-blue-300 rounded-md w-4/5"  />
@@ -47,7 +35,7 @@ const EditWali = () => {
                         </div>
                         
                     </div>
-                    <div className="col-span-1 space-y-3">
+                    <div className="col-start-2 col-span-1 space-y-3">
                         <div className="mb-1">
                             <label htmlFor="user" className="font-bold mb-1 block">User Name</label>
                             <input type="user" id="user" name="user" className="p-1 border text-black border-blue-300 rounded-md w-4/5"  />

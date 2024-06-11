@@ -1,4 +1,4 @@
-"use client"; // Add this line at the top
+"use client"; 
 
 import { BarChart, LayoutDashboard, Settings2, UserCircleIcon } from "lucide-react";
 import Navbar from "../atoms/navbar";
@@ -32,7 +32,7 @@ const DashLayout = ({ children }) => {
             <SidebarItem
               icon={<UserCircleIcon size={20} />}
               text={"Account"}
-              active={pathname === "/account"}
+              active={pathname.startsWith("/account")}
             />
           </Link>
         </Sidebar>

@@ -1,5 +1,6 @@
+import InfoWaliCards from "@/components/atoms/card";
+import EditNavbar from "@/components/atoms/editNavbar";
 import DashLayout from "@/components/templates/DashLayout";
-import EditWali from "@/components/templates/EditWali";
 
 const Account = () => {
     return (
@@ -8,7 +9,8 @@ const Account = () => {
                 <div >
                     <div className="rounded-2xl flex flex-col gap-4 bg-white">
                         <div className="">
-                            <EditWali />
+                            <EditNavbar />
+                            <InfoWaliCards />
                         </div>
                     </div>
                 </div>
