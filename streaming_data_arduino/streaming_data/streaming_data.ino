@@ -165,23 +165,10 @@ void loop() {
 
     sensors_event_t a, g, temp;
     mpu.getEvent(&a, &g, &temp);
-    sendDataPrevMillis = millis();
  
-    if (Firebase.RTDB.setFloat(&fbdo, "Sensor/gyroX", g.gyro.x)){
-    } else {
-      Serial.println("FAILED:" + fbdo.errorReason());
-    }
-
-    if (Firebase.RTDB.setFloat(&fbdo, "Sensor/gyroY", g.gyro.y)){
-    } else {
-      Serial.println("FAILED:" + fbdo.errorReason());
-    }
-
-    if (Firebase.RTDB.setFloat(&fbdo, "Sensor/gyroZ", g.gyro.z)){ 
-    } else {
-      Serial.println("FAILED:" + fbdo.errorReason());
-    }
-
+    Firebase.RTDB.setFloat(&fbdo, "Sensor/gyroX", g.gyro.x);
+    Firebase.RTDB.setFloat(&fbdo, "Sensor/gyroY", g.gyro.y);
+    Firebase.RTDB.setFloat(&fbdo, "Sensor/gyroZ", g.gyro.z);
     String sensorData =  String(g.gyro.x) + "," + String(g.gyro.y) + "," + String(g.gyro.z);
     Serial.println("sending packet");
     client.publish("esp32/sensors", sensorData.c_str());
