@@ -7,20 +7,22 @@
 | 5. | Muhammad Lukman Hakim - 2141720109 |
 | 6. | Ilham Khalis Putra Agatha - 2141720230 |
 
+### Bot Telegram
+https://t.me/AkuJatuhBot
 
-Tampilan Halaman Register
+### Tampilan Halaman Register
 ![alt text](assets-report/reg.png)
 
-Tampilan Halaman Login
+### Tampilan Halaman Login
 ![alt text](assets-report/log.png)
 
-Tampilan Halaman Dashboard
+### Tampilan Halaman Dashboard
 ![alt text](assets-report/dash.png)
 
-Tampilan Halaman Settings
+### Tampilan Halaman Settings
 ![alt text](assets-report/sett.png)
 
-Tampilan Halaman Edit Profile
+### Tampilan Halaman Edit Profile
 ![alt text](assets-report/acc.png)
 
 | No | Nama                          | Role             |
