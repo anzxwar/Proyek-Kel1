@@ -3,17 +3,8 @@
 #include <Wire.h>
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
-#include <Firebase_ESP_Client.h>
-#include "addons/TokenHelper.h"
-#include "addons/RTDBHelper.h"
+
 Adafruit_MPU6050 mpu;
-
-#define API_KEY "AIzaSyBHvf45coRDHnqMb3MhqE8E8vhYzPjEF2k"
-#define DATABASE_URL "https://streamgyro-d4613-default-rtdb.asia-southeast1.firebasedatabase.app/"
-
-FirebaseData fbdo;
-FirebaseAuth auth;
-FirebaseConfig config;
 
 const char *ssid = "JTI-POLINEMA";//silakan disesuaikan sendiri
 const char *password = "jtifast!";//silakan disesuaikan sendiri
@@ -22,12 +13,11 @@ const char *mqtt_server = "34.128.107.144";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
-unsigned long sendDataPrevMillis = 0;
 // long now = millis();
 // long lastMeasure = 0;
 unsigned long previousMillis = 0;      // Menyimpan waktu terakhir data diterbitkan
 const long interval = 100;            // Interval untuk menerbitkan data sensor
-bool signupOK = false;
+
 
 void setup_wifi()
 {
@@ -76,19 +66,6 @@ void setup()
     delay(10); // will pause Zero, Leonardo, etc until serial console opens
 
   Serial.println("Adafruit MPU6050 test!");
-
-  config.api_key = API_KEY;
-  config.database_url = DATABASE_URL;
-  if(Firebase.signUp(&config, &auth, "", "")){
-    Serial.println("signUp OK");
-    signupOK = true;
-  }else{
-    Serial.printf("%s\n", config.signer.signupError.message.c_str());
-  }
-
-  config.token_status_callback = tokenStatusCallback;
-  Firebase.begin(&config, &auth);
-  Firebase.reconnectWiFi(true);
 
   // Try to initialize!
   if (!mpu.begin()) {
@@ -160,15 +137,12 @@ void loop() {
   //   lastMeasure = now;
   // /* Get new sensor events with the readings */
   unsigned long currentMillis = millis();
-  if (Firebase.ready() && signupOK && (currentMillis - previousMillis >= interval)) {  // Memeriksa apakah interval waktu telah berlalu
+  if (currentMillis - previousMillis >= interval) {  // Memeriksa apakah interval waktu telah berlalu
     previousMillis = currentMillis;
 
     sensors_event_t a, g, temp;
     mpu.getEvent(&a, &g, &temp);
  
-    Firebase.RTDB.setFloat(&fbdo, "Sensor/gyroX", g.gyro.x);
-    Firebase.RTDB.setFloat(&fbdo, "Sensor/gyroY", g.gyro.y);
-    Firebase.RTDB.setFloat(&fbdo, "Sensor/gyroZ", g.gyro.z);
     String sensorData =  String(g.gyro.x) + "," + String(g.gyro.y) + "," + String(g.gyro.z);
     Serial.println("sending packet");
     client.publish("esp32/sensors", sensorData.c_str());
