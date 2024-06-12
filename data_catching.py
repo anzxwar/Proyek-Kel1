@@ -2,11 +2,19 @@ import json
 import os
 import paho.mqtt.client as mqtt
 from datetime import datetime
+import firebase_admin
+from firebase_admin import credentials, db
 
 # Configuration for MQTT
 broker_address = "34.128.107.144"
 port = 1883
 topic = "esp32/sensors"
+
+# Initialize Firebase
+cred = credentials.Certificate('streamgyro-d4613-firebase-adminsdk-ikkzl-ef1e3b2c23.json')
+firebase_admin.initialize_app(cred, {
+    'databaseURL':  "https://streamgyro-d4613-default-rtdb.asia-southeast1.firebasedatabase.app"
+})
 
 # Initialize or open data file
 if not os.path.exists('sensordata.json'):
@@ -41,7 +49,7 @@ def on_message(client, userdata, msg):
         data_str = msg.payload.decode('utf-8')
         data_parts = data_str.split(',')
 
-        # Validate that the data_parts have exactly 8 elements
+        # Validate that the data_parts have exactly 3 elements
         if len(data_parts) == 3:
             timestamp = datetime.now().isoformat()
             gyro_values = [float(i) for i in data_parts[0:3]]
@@ -56,13 +64,18 @@ def on_message(client, userdata, msg):
             # Append the new sensor entry
             sensordata.append(sensor_entry)
 
-            # Maintain only the last 30 entries
+            # Maintain only the last 25 entries
             if len(sensordata) > 25:
                 sensordata.pop(0)
 
             # Overwrite the JSON file with the updated sensor data
             with open('sensordata.json', 'w') as json_file:
                 json.dump(sensordata, json_file, indent=4)
+
+            # Send the sensor entry to Firebase
+            ref = db.reference('sensors')
+            new_entry_ref = ref.push(sensor_entry)
+            print(f"Data sent to Firebase with key: {new_entry_ref.key}")
         else:
             print("Invalid data format received: ", data_parts)
     except Exception as e:
