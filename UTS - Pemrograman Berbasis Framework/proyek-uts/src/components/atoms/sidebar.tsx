@@ -73,8 +73,8 @@ export default function Sidebar({ children }) {
   };
 
   return (
-    <aside className="h-screen">
-      <nav style={{ backgroundColor: '#DBD3AD' }} className="h-full flex flex-col border-r shadow-sm">
+    <aside style={{height: '100vh'}} className="h-full">
+      <nav style={{ backgroundColor: '#DBD3AD'}} className="h-full flex flex-col border-r shadow-sm">
         <div className="p-4 pb-2 flex justify-between items-center">
           <img
             src="/lansia_logo.png"
