@@ -3,69 +3,82 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
 import paho.mqtt.client as mqtt
 import json
+from threading import Lock
 
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
                     level=logging.INFO)
 
 logger = logging.getLogger(__name__)
 
-bot = Bot('6953268438:AAGvy3-4WMaJeRtl0PpYn44HzXwNjNXXWqc')
-updater = Updater(bot=bot)
-
-dispatcher = updater.dispatcher
-
-# Load the chat IDs from a JSON file
-try:
-    with open('chat_ids.json', 'r') as f:
-        chat_ids = set(json.load(f))
-except FileNotFoundError:
-    chat_ids = set()
-
-# Load the subscribed chat IDs from a JSON file
-try:
-    with open('subscribed_ids.json', 'r') as f:
-        subscribed = set(json.load(f))
-except FileNotFoundError:
-    subscribed = set()
-
+# Initialize MQTT client
 mqtt_client = mqtt.Client()
 mqtt_client.connect("34.128.107.144", 1883)
 
-# Variabel global untuk menyimpan pesan terakhir, status jatuh, dan status berlangganan
+# Initialize global variables and lock
 last_fall_message = ""
+chat_ids = set()
+subscribed = set()
+lock = Lock()
+
+# Load chat IDs from a JSON file if exists
+try:
+    with open('chat_ids.json', 'r') as f:
+        chat_ids.update(set(json.load(f)))
+except FileNotFoundError:
+    pass
+
+# Load subscribed IDs from a JSON file if exists
+try:
+    with open('subscribed_ids.json', 'r') as f:
+        subscribed.update(set(json.load(f)))
+except FileNotFoundError:
+    pass
+
+# Function to save chat IDs to JSON file
+def save_chat_ids():
+    with open('chat_ids.json', 'w') as f:
+        json.dump(list(chat_ids), f)
+
+# Function to save subscribed IDs to JSON file
+def save_subscribed_ids():
+    with open('subscribed_ids.json', 'w') as f:
+        json.dump(list(subscribed), f)
+
+# Telegram bot token
+bot = Bot('6953268438:AAGvy3-4WMaJeRtl0PpYn44HzXwNjNXXWqc')
+updater = Updater(bot=bot)
+
+# Dispatcher for handling commands and messages
+dispatcher = updater.dispatcher
 
 def start(update, context):
-    chat_ids.add(update.effective_chat.id)
-    username = update.message.from_user.username
-    context.bot.send_message(chat_id=update.effective_chat.id, text="Selamat Datang, " + username + " di Aku Jatuh Bot. Jangan lupa /subscribe untuk mendapatkan notifikasi!")
+    with lock:
+        chat_ids.add(update.effective_chat.id)
+        username = update.message.from_user.username
+        context.bot.send_message(chat_id=update.effective_chat.id, text="Selamat Datang, " + username + " di Aku Jatuh Bot. Jangan lupa /subscribe untuk mendapatkan notifikasi!")
 
 def subscribe(update, context):
-    # Add the chat ID to the subscribed set
-    subscribed.add(update.effective_chat.id)
-    username = update.message.from_user.username
-    context.bot.send_message(chat_id=update.effective_chat.id, text=username + " telah berlangganan dan akan mendapatkan notifikasi jika terjadi insiden jatuh.")
-
-    # Save the updated subscribed chat IDs to the JSON file
-    with open('subscribed_ids.json', 'w') as f:
-        json.dump(list(subscribed), f)
+    with lock:
+        subscribed.add(update.effective_chat.id)
+        username = update.message.from_user.username
+        context.bot.send_message(chat_id=update.effective_chat.id, text=username + " telah berlangganan dan akan mendapatkan notifikasi jika terjadi insiden jatuh.")
+        save_subscribed_ids()
 
 def status(update, context):
-    if update.effective_chat.id in subscribed:
-        if last_fall_message:
-            context.bot.send_message(chat_id=update.effective_chat.id, text=last_fall_message)
+    with lock:
+        if update.effective_chat.id in subscribed:
+            if last_fall_message:
+                context.bot.send_message(chat_id=update.effective_chat.id, text=last_fall_message)
+            else:
+                context.bot.send_message(chat_id=update.effective_chat.id, text="No fall detected yet.")
         else:
-            context.bot.send_message(chat_id=update.effective_chat.id, text="No fall detected yet.")
-    else:
-        context.bot.send_message(chat_id=update.effective_chat.id, text="/subscribe dulu lah bang!")
+            context.bot.send_message(chat_id=update.effective_chat.id, text="/subscribe dulu lah bang!")
 
 def unsubscribe(update, context):
-    # Remove the chat ID from the subscribed set
-    subscribed.remove(update.effective_chat.id)
-    context.bot.send_message(chat_id=update.effective_chat.id, text="Kami doakan semoga keluargamu baik baik saja. Aamiin.")
-
-    # Save the updated subscribed chat IDs to the JSON file
-    with open('subscribed_ids.json', 'w') as f:
-        json.dump(list(subscribed), f)
+    with lock:
+        subscribed.discard(update.effective_chat.id)
+        context.bot.send_message(chat_id=update.effective_chat.id, text="Kami doakan semoga keluargamu baik baik saja. Aamiin.")
+        save_subscribed_ids()
 
 def detect_fall(data):
     if data == "FALL_DETECTED":
@@ -73,30 +86,34 @@ def detect_fall(data):
     return False
 
 def handle_message(update, context):
-    chat_ids.add(update.effective_chat.id)
-    message = update.message.text
-    if detect_fall(message):
-        for chat_id in chat_ids:
-            context.bot.send_message(chat_id=chat_id, text="JATUH TERDETEKSI!")
+    with lock:
+        chat_ids.add(update.effective_chat.id)
+        message = update.message.text
+        if detect_fall(message):
+            for chat_id in chat_ids:
+                if chat_id in subscribed:
+                    context.bot.send_message(chat_id=chat_id, text="JATUH TERDETEKSI!")
 
 def on_connect(client, userdata, flags, rc):
-    print("Connected with result code "+str(rc))
+    logger.info("Connected with result code "+str(rc))
     client.subscribe("esp32/result")
 
 def on_message(client, userdata, msg):
     global last_fall_message
-    print(msg.topic+" "+str(msg.payload))
+    logger.info(msg.topic+" "+str(msg.payload))
     message = msg.payload.decode()
     last_fall_message = message  # Always update last_fall_message with the latest message
     if "fall" in message:
-        for chat_id in subscribed:  # Only send message to subscribed users
-            bot.send_message(chat_id=chat_id, text="JATUH TERDETEKSI! Detail Jatuh: " + last_fall_message)
+        with lock:
+            for chat_id in subscribed:  # Only send message to subscribed users
+                bot.send_message(chat_id=chat_id, text="JATUH TERDETEKSI! Detail Jatuh: " + last_fall_message)
 
 mqtt_client.on_connect = on_connect
 mqtt_client.on_message = on_message
 
 mqtt_client.loop_start()
 
+# Command handlers
 start_handler = CommandHandler('start', start)
 dispatcher.add_handler(start_handler)
 
@@ -109,9 +126,17 @@ dispatcher.add_handler(status_handler)
 unsubscribe_handler = CommandHandler('unsubscribe', unsubscribe)
 dispatcher.add_handler(unsubscribe_handler)
 
+# Message handler
 message_handler = MessageHandler(Filters.text & (~Filters.command), handle_message)
 dispatcher.add_handler(message_handler)
 
+# Start polling for Telegram messages
 updater.start_polling()
 
+# Run the bot until you press Ctrl-C
 updater.idle()
+
+# Ensure to disconnect MQTT client on exit
+mqtt_client.loop_stop()
+mqtt_client.disconnect()
+
