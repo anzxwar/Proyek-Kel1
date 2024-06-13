@@ -21,12 +21,18 @@ try:
 except FileNotFoundError:
     chat_ids = set()
 
+# Load the subscribed chat IDs from a JSON file
+try:
+    with open('subscribed_ids.json', 'r') as f:
+        subscribed = set(json.load(f))
+except FileNotFoundError:
+    subscribed = set()
+
 mqtt_client = mqtt.Client()
 mqtt_client.connect("34.128.107.144", 1883)
 
 # Variabel global untuk menyimpan pesan terakhir, status jatuh, dan status berlangganan
 last_fall_message = ""
-subscribed = set()  # Variabel global untuk menyimpan ID obrolan dari pengguna yang berlangganan
 
 def start(update, context):
     chat_ids.add(update.effective_chat.id)
@@ -38,6 +44,10 @@ def subscribe(update, context):
     subscribed.add(update.effective_chat.id)
     username = update.message.from_user.username
     context.bot.send_message(chat_id=update.effective_chat.id, text=username + " telah berlangganan dan akan mendapatkan notifikasi jika terjadi insiden jatuh.")
+
+    # Save the updated subscribed chat IDs to the JSON file
+    with open('subscribed_ids.json', 'w') as f:
+        json.dump(list(subscribed), f)
 
 def status(update, context):
     if update.effective_chat.id in subscribed:
@@ -52,6 +62,10 @@ def unsubscribe(update, context):
     # Remove the chat ID from the subscribed set
     subscribed.remove(update.effective_chat.id)
     context.bot.send_message(chat_id=update.effective_chat.id, text="Kami doakan semoga keluargamu baik baik saja. Aamiin.")
+
+    # Save the updated subscribed chat IDs to the JSON file
+    with open('subscribed_ids.json', 'w') as f:
+        json.dump(list(subscribed), f)
 
 def detect_fall(data):
     if data == "FALL_DETECTED":
