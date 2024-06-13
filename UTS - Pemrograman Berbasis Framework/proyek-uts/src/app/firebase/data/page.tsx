@@ -1,5 +1,6 @@
-"use client";
+// GetData.js
 
+"use client"
 import { useEffect, useState } from "react";
 import { db } from "../../firebaseConfig";
 import { ref, onValue, off } from "firebase/database";
@@ -24,7 +25,7 @@ export default function GetData() {
               y: data[key].y,
               z: data[key].z
             }));
-            setFirebaseData(formattedData);
+            setFirebaseData(formattedData.slice(-30)); // Get the last 30 entries
           } else {
             setFirebaseData([]);
           }
@@ -93,7 +94,7 @@ export default function GetData() {
 
   return (
     <div>
-      <h1>Firebase Data</h1>
+      <h1>Firebase Data (Last 30 Entries)</h1>
       <Line data={chartData} options={chartOptions} />
     </div>
   );

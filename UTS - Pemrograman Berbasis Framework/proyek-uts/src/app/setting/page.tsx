@@ -1,5 +1,6 @@
 import SetNotif from "@/components/atoms/setNotif";
 import DashLayout from "@/components/templates/DashLayout";
+import Notif from "@/components/atoms/notif";
 
 const Setting = () => {
     return (
