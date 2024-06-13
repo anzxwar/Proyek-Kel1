@@ -17,7 +17,6 @@ export default function GetData() {
         const dataRef = ref(db, "sensors");
         onValue(dataRef, (snapshot) => {
           const data = snapshot.val();
-          // Assuming data is an object where keys are unique IDs and values are the data entries
           if (data) {
             const formattedData = Object.keys(data).map(key => ({
               timestamp: data[key].timestamp,
@@ -75,10 +74,27 @@ export default function GetData() {
     ]
   };
 
+  const chartOptions = {
+    scales: {
+      y: {
+        beginAtZero: false,
+        ticks: {
+          min: 0, // Set the minimum value for the y-axis
+          max: 100, // Set the maximum value for the y-axis
+        }
+      },
+      x: {
+        ticks: {
+          maxTicksLimit: 20, // Limit the number of ticks on the x-axis
+        }
+      }
+    }
+  };
+
   return (
     <div>
       <h1>Firebase Data</h1>
-      <Line data={chartData} />
+      <Line data={chartData} options={chartOptions} />
     </div>
   );
 }
