@@ -78,6 +78,23 @@ def unsubscribe(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id, text="Kami doakan semoga keluargamu baik baik saja. Aamiin.")
         subscribed = False
 
+        # Remove the chat ID from the set
+        chat_ids.remove(update.effective_chat.id)
+
+        # Load the existing chat IDs from the JSON file
+        try:
+            with open('chat_ids.json', 'r') as f:
+                existing_chat_ids = set(json.load(f))
+        except FileNotFoundError:
+            existing_chat_ids = set()
+
+        # Remove the chat ID from the existing chat IDs
+        existing_chat_ids.remove(update.effective_chat.id)
+
+        # Save the updated chat IDs to the JSON file
+        with open('chat_ids.json', 'w') as f:
+            json.dump(list(existing_chat_ids), f)
+
 def detect_fall(data):
     if data == "FALL_DETECTED":
         return True
@@ -99,10 +116,9 @@ def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
     message = msg.payload.decode()
     last_fall_message = message  # Always update last_fall_message with the latest message
-    if "fall" in message:
+    if "fall" in message and subscribed:
         for chat_id in chat_ids:
             bot.send_message(chat_id=chat_id, text="JATUH TERDETEKSI! Detail Jatuh: " + last_fall_message)
-
 
 mqtt_client.on_connect = on_connect
 mqtt_client.on_message = on_message
