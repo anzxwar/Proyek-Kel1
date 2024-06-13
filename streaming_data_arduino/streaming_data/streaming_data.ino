@@ -3,6 +3,7 @@
 #include <Wire.h>
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
+#define buzzer D0
 
 Adafruit_MPU6050 mpu;
 
@@ -58,10 +59,9 @@ void reconnect()
 void setup()
 {
   Serial.begin(115200);
-  Serial.println("Mqtt Node-RED");
   setup_wifi();
   client.setServer(mqtt_server, 1883);
-  Serial.begin(115200);
+  pinMode(buzzer, OUTPUT);
   while (!Serial)
     delay(10); // will pause Zero, Leonardo, etc until serial console opens
 
@@ -75,51 +75,25 @@ void setup()
     }
   }
   Serial.println("MPU6050 Found!");
-  mpu.setGyroRange(MPU6050_RANGE_500_DEG);
-  Serial.print("Gyro range set to: ");
-  switch (mpu.getGyroRange()) {
-  case MPU6050_RANGE_250_DEG:
-    Serial.println("+- 250 deg/s");
-    break;
-  case MPU6050_RANGE_500_DEG:
-    Serial.println("+- 500 deg/s");
-    break;
-  case MPU6050_RANGE_1000_DEG:
-    Serial.println("+- 1000 deg/s");
-    break;
-  case MPU6050_RANGE_2000_DEG:
-    Serial.println("+- 2000 deg/s");
-    break;
-  }
-
-  mpu.setFilterBandwidth(MPU6050_BAND_21_HZ);
-  Serial.print("Filter bandwidth set to: ");
-  switch (mpu.getFilterBandwidth()) {
-  case MPU6050_BAND_260_HZ:
-    Serial.println("260 Hz");
-    break;
-  case MPU6050_BAND_184_HZ:
-    Serial.println("184 Hz");
-    break;
-  case MPU6050_BAND_94_HZ:
-    Serial.println("94 Hz");
-    break;
-  case MPU6050_BAND_44_HZ:
-    Serial.println("44 Hz");
-    break;
-  case MPU6050_BAND_21_HZ:
-    Serial.println("21 Hz");
-    break;
-  case MPU6050_BAND_10_HZ:
-    Serial.println("10 Hz");
-    break;
-  case MPU6050_BAND_5_HZ:
-    Serial.println("5 Hz");
-    break;
-  }
-
+  
+  client.setCallback(callback);
   Serial.println("");
   delay(100);
+}
+
+void callback(char* topic, byte* payload, unsigned int length) {
+  String message;
+  for (int i = 0; i < length; i++) {
+    message += (char)payload[i];
+  }
+  digitalWrite(buzzer, HIGH);
+  // Check if the message contains the word "fall"
+  if (message.indexOf("fall") != -1) {
+    digitalWrite(buzzer, LOW);  // Turn the buzzer on
+    delay(3000);                    // Keep the buzzer on for 1 second
+    digitalWrite(buzzer, HIGH);   // Turn the buzzer off
+  }
+  message ="";
 }
 
 void loop() {
@@ -147,4 +121,5 @@ void loop() {
     Serial.println("sending packet");
     client.publish("esp32/sensors", sensorData.c_str());
   }
+  client.subscribe("esp32/result");
 }
