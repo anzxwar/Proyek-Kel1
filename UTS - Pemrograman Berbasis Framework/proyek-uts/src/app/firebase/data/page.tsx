@@ -55,22 +55,22 @@ export default function GetData() {
         label: "X Value",
         data: firebaseData.map(entry => entry.x),
         fill: false,
-        backgroundColor: "rgba(75,192,192,0.4)",
-        borderColor: "rgba(75,192,192,1)",
+        backgroundColor: "#072ac8",
+        borderColor: "#072ac8",
       },
       {
         label: "Y Value",
         data: firebaseData.map(entry => entry.y),
         fill: false,
-        backgroundColor: "rgba(192,75,192,0.4)",
-        borderColor: "rgba(192,75,192,1)",
+        backgroundColor: "#ff5400",
+        borderColor: "#ff5400",
       },
       {
         label: "Z Value",
         data: firebaseData.map(entry => entry.z),
         fill: false,
-        backgroundColor: "rgba(192,192,75,0.4)",
-        borderColor: "rgba(192,192,75,1)",
+        backgroundColor: "#3e8914",
+        borderColor: "#3e8914",
       }
     ]
   };
