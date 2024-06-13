@@ -26,7 +26,7 @@ mqtt_client.connect("34.128.107.144", 1883)
 
 # Variabel global untuk menyimpan pesan terakhir, status jatuh, dan status berlangganan
 last_fall_message = ""
-subscribed = False
+subscribed = set()  # Variabel global untuk menyimpan ID obrolan dari pengguna yang berlangganan
 
 def start(update, context):
     chat_ids.add(update.effective_chat.id)
@@ -34,34 +34,13 @@ def start(update, context):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Selamat Datang, " + username + " di Aku Jatuh Bot. Jangan lupa /subscribe untuk mendapatkan notifikasi!")
 
 def subscribe(update, context):
-    global subscribed
-    if subscribed:
-        context.bot.send_message(chat_id=update.effective_chat.id, text="You are already subscribed.")
-    else:
-        mqtt_client.subscribe("esp32/result")
-        username = update.message.from_user.username
-        context.bot.send_message(chat_id=update.effective_chat.id, text=username + " telah berlangganan dan akan mendapatkan notifikasi jika terjadi insiden jatuh.")
-        subscribed = True
-
-        # Add the chat ID to the set
-        chat_ids.add(update.effective_chat.id)
-
-        # Load the existing chat IDs from the JSON file
-        try:
-            with open('chat_ids.json', 'r') as f:
-                existing_chat_ids = set(json.load(f))
-        except FileNotFoundError:
-            existing_chat_ids = set()
-
-        # Add the new chat ID to the existing chat IDs
-        existing_chat_ids.add(update.effective_chat.id)
-
-        # Save the updated chat IDs to the JSON file
-        with open('chat_ids.json', 'w') as f:
-            json.dump(list(existing_chat_ids), f)
+    # Add the chat ID to the subscribed set
+    subscribed.add(update.effective_chat.id)
+    username = update.message.from_user.username
+    context.bot.send_message(chat_id=update.effective_chat.id, text=username + " telah berlangganan dan akan mendapatkan notifikasi jika terjadi insiden jatuh.")
 
 def status(update, context):
-    if subscribed:
+    if update.effective_chat.id in subscribed:
         if last_fall_message:
             context.bot.send_message(chat_id=update.effective_chat.id, text=last_fall_message)
         else:
@@ -70,30 +49,9 @@ def status(update, context):
         context.bot.send_message(chat_id=update.effective_chat.id, text="/subscribe dulu lah bang!")
 
 def unsubscribe(update, context):
-    global subscribed
-    if not subscribed:
-        context.bot.send_message(chat_id=update.effective_chat.id, text="You are not currently subscribed.")
-    else:
-        mqtt_client.unsubscribe("esp32/result")
-        context.bot.send_message(chat_id=update.effective_chat.id, text="Kami doakan semoga keluargamu baik baik saja. Aamiin.")
-        subscribed = False
-
-        # Remove the chat ID from the set
-        chat_ids.remove(update.effective_chat.id)
-
-        # Load the existing chat IDs from the JSON file
-        try:
-            with open('chat_ids.json', 'r') as f:
-                existing_chat_ids = set(json.load(f))
-        except FileNotFoundError:
-            existing_chat_ids = set()
-
-        # Remove the chat ID from the existing chat IDs
-        existing_chat_ids.remove(update.effective_chat.id)
-
-        # Save the updated chat IDs to the JSON file
-        with open('chat_ids.json', 'w') as f:
-            json.dump(list(existing_chat_ids), f)
+    # Remove the chat ID from the subscribed set
+    subscribed.remove(update.effective_chat.id)
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Kami doakan semoga keluargamu baik baik saja. Aamiin.")
 
 def detect_fall(data):
     if data == "FALL_DETECTED":
@@ -116,8 +74,8 @@ def on_message(client, userdata, msg):
     print(msg.topic+" "+str(msg.payload))
     message = msg.payload.decode()
     last_fall_message = message  # Always update last_fall_message with the latest message
-    if "fall" in message and subscribed:
-        for chat_id in chat_ids:
+    if "fall" in message:
+        for chat_id in subscribed:  # Only send message to subscribed users
             bot.send_message(chat_id=chat_id, text="JATUH TERDETEKSI! Detail Jatuh: " + last_fall_message)
 
 mqtt_client.on_connect = on_connect
