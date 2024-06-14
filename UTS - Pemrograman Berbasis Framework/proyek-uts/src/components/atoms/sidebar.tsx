@@ -73,7 +73,7 @@ export default function Sidebar({ children }) {
   };
 
   return (
-    <aside style={{height: '100vh'}} className="h-full">
+    <aside className="h-full">
       <nav style={{ backgroundColor: '#DBD3AD'}} className="h-full flex flex-col border-r shadow-sm">
         <div className="p-4 pb-2 flex justify-between items-center">
           <img
@@ -81,12 +81,6 @@ export default function Sidebar({ children }) {
             className={`overflow-hidden transition-all ${expanded ? "w-16" : "w-0"}`}
             alt=""
           />
-          <button
-            onClick={() => setExpanded((curr) => !curr)}
-            className="p-1.5 rounded-lg bg-gray-700 hover:bg-blue-100"
-          >
-            {expanded ? <ChevronFirst /> : <ChevronLast />}
-          </button>
         </div>
 
         <SidebarContext.Provider value={{ expanded }}>
