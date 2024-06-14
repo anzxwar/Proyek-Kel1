@@ -90,7 +90,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
   // Check if the message contains the word "fall"
   if (message.indexOf("fall") != -1) {
     digitalWrite(buzzer, LOW);  // Turn the buzzer on
-    delay(3000);                    // Keep the buzzer on for 1 second
+    delay(5000);                    // Keep the buzzer on for 1 second
     digitalWrite(buzzer, HIGH);   // Turn the buzzer off
   }
   message ="";
