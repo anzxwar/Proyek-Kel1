@@ -84,7 +84,7 @@ def emergency(update, context):
 
     - dr. Lukman, Sp.KJ; 081230992773 
     """
-    context.bot.send_message(chat_id=update.effective_chat.id, text=emergency_message)
+    context.bot.send_message(chat_id=update.effective_chat.id, text=emergency_message, parse_mode='Markdown')
 
 def unsubscribe(update, context):
     with lock:
