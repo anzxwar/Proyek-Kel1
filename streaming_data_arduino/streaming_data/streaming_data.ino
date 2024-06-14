@@ -82,17 +82,19 @@ void setup()
 }
 
 void callback(char* topic, byte* payload, unsigned int length) {
+  digitalWrite(buzzer, HIGH);
   String message;
   for (int i = 0; i < length; i++) {
     message += (char)payload[i];
   }
-  digitalWrite(buzzer, HIGH);
+  
   // Check if the message contains the word "fall"
   if (message.indexOf("fall") != -1) {
     digitalWrite(buzzer, LOW);  // Turn the buzzer on
     delay(5000);                    // Keep the buzzer on for 1 second
     digitalWrite(buzzer, HIGH);   // Turn the buzzer off
   }
+  digitalWrite(buzzer, HIGH);
   message ="";
 }
 
