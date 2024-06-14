@@ -82,7 +82,7 @@ def emergency(update, context):
 
     Untuk nomor dokter, harap hubungi rumah sakit atau klinik terdekat:
 
-    - dr. Lukman, Sp.KJ; 081230992773 
+    - dr. Lukman, Sp.KJ: 081230992773 
     """
     context.bot.send_message(chat_id=update.effective_chat.id, text=emergency_message, parse_mode='Markdown')
 
