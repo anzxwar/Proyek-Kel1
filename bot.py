@@ -74,6 +74,18 @@ def status(update, context):
         else:
             context.bot.send_message(chat_id=update.effective_chat.id, text="/subscribe dulu lah bang!")
 
+def emergency(update, context):
+    emergency_message = """
+    Berikut adalah beberapa nomor darurat di Indonesia:
+
+    - Ambulans: 118 atau 119
+
+    Untuk nomor dokter, harap hubungi rumah sakit atau klinik terdekat:
+
+    - dr. Lukman, Sp.KJ; 081230992773 
+    """
+    context.bot.send_message(chat_id=update.effective_chat.id, text=emergency_message)
+
 def unsubscribe(update, context):
     with lock:
         subscribed.discard(update.effective_chat.id)
@@ -122,6 +134,9 @@ dispatcher.add_handler(subscribe_handler)
 
 status_handler = CommandHandler('status', status)
 dispatcher.add_handler(status_handler)
+
+emergency_handler = CommandHandler('emergency', emergency)
+dispatcher.add_handler(emergency_handler)
 
 unsubscribe_handler = CommandHandler('unsubscribe', unsubscribe)
 dispatcher.add_handler(unsubscribe_handler)
