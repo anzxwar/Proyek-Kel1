@@ -4,7 +4,6 @@
 import React, { useState } from "react";
 import { log, auth } from "@/app/firebaseConfig";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import Button from "@/components/atoms/button";
 
 const FormLogin = () => {
